@@ -83,7 +83,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                         print(new_line, file=myFile)
         elif filename.startswith("mNode_Port4"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port4/"
-            regex = r".{4}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{4}"
+            regex = r"(.{3}).{1}(\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{3})"
             textfile = open(file, 'r')
             matches = []
             # reg = re.compile(regex)
