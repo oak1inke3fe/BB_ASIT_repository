@@ -99,6 +99,61 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                     else:
                         new_line = ','.join(match.groups())
                         print(new_line, file=myFile)
+        elif filename.startswith("mNode_Port5"):
+            path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port5/"
+            regex = r"(\d{3}.{1}\d{3,}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{3,4}).{1}(\d{1,2}.{1}\d{1,2}).{1}(\d{1,2}.{1}\d{2}).{1}(.{0,1}\d{1,2}.{1}\d{3}).{1}(.{0,1}\d{1,2}.{1}\d{2}).{1}(\d{1}.{1}\d{1,3}).{1}(.{1,}).{1}(.{1,}).{1}(.{1,})"
+            textfile = open(file, 'r')
+            matches = []
+            # reg = re.compile(regex)
+            for line in textfile:
+                matches.append(re.match(regex,line))
+            textfile.close()
+            newFileName = str(filename_only)+".txt"
+            lines = []
+            with open(os.path.join(path_save,newFileName), "w") as myFile:
+                for match in matches:
+                    if match is None:
+                        print(r"Nan,Nan,NaN,NaN,NaN,NaN,NaN,Nan,Nan,NaN,NaN,NaN,NaN,NaN,NaN", file=myFile)
+                    else:
+                        new_line = ','.join(match.groups())
+                        print(new_line, file=myFile)
+        elif filename.startswith("mNode_Port6"):
+            path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port6/"
+            regex = r".{4}(\d{1})(\d{3,4}.{1}\d{1,})"
+            textfile = open(file, 'r')
+            matches = []
+            # reg = re.compile(regex)
+            for line in textfile:
+                matches.append(re.match(regex,line))
+            textfile.close()
+            newFileName = str(filename_only)+".txt"
+            lines = []
+            with open(os.path.join(path_save,newFileName), "w") as myFile:
+                for match in matches:
+                    if match is None:
+                        print(r"Nan,Nan", file=myFile)
+                    else:
+                        new_line = ','.join(match.groups())
+                        print(new_line, file=myFile)
+        #Need to come back to file 7
+        # elif filename.startswith("mNode_Port7"):
+        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port7/"
+        #     regex = r".{4}(\d{1})(\d{3,4}.{1}\d{1,})"
+        #     textfile = open(file, 'r')
+        #     matches = []
+        #     # reg = re.compile(regex)
+        #     for line in textfile:
+        #         matches.append(re.match(regex,line))
+        #     textfile.close()
+        #     newFileName = str(filename_only)+".txt"
+        #     lines = []
+        #     with open(os.path.join(path_save,newFileName), "w") as myFile:
+        #         for match in matches:
+        #             if match is None:
+        #                 print(r"Nan,Nan", file=myFile)
+        #             else:
+        #                 new_line = ','.join(match.groups())
+        #                 print(new_line, file=myFile)
 #%%
 # Testing below
 # filename = r"E:\mNode_test2folders\mN220509\mNode_Port4_20220509_100000.dat"
