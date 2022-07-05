@@ -153,7 +153,7 @@ print('done with interp_lidar function')
 # df_abSbComps_2 = pd.DataFrame(columns=['alpha','beta','Uhoriz_orig'])
 # df_abSbComps_3 = pd.DataFrame(columns=['alpha','beta','Uhoriz_orig'])
 # df_abSbComps_4 = pd.DataFrame(columns=['alpha','beta','Uhoriz_orig'])
-filepath= r"E:\mNode_test2folders\mN220509"
+filepath= r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved"
 for root, dirnames, filenames in os.walk(filepath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)

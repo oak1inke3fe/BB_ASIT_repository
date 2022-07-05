@@ -36,7 +36,7 @@ Port 7:
 """
 
 #%% Imports
-
+#testing comment
 import numpy as np
 import pandas as pd
 # from pandas import rolling_median
@@ -72,21 +72,28 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             # print('did this too')
             U_horiz = []
             U_streamwise = []
-            tke = []
+            # tke = []
             for i in range(len(df_align_interp)):
                 U_horizontal_i = math.sqrt((U[i]**2)+(V[i]**2))
                 U_horiz.append(U_horizontal_i)
                 U_streamwise_i = math.sqrt((U[i]**2)+(V[i]**2)+(W[i]**2))
                 U_streamwise.append(U_streamwise_i)
                 # wind_dir = math.atan3(v_orig_comp[i],u_orig_comp[i])
-                tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
-                tke.append(tke_i)
+                # tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
+                # tke.append(tke_i)
             # print('did orig TKE')
             tke_avg = np.ones(len(df_align_interp))*(0.5*((np.mean(u_prime**2))+(np.mean(v_prime**2))+(np.mean(w_prime**2))))   
             # print('did average tke')
-            df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
-                                   T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
-                                   U_streamwise = 'U_streamwise')
+            # df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
+            #                        T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
+            #                        U_streamwise = 'U_streamwise')
+            df_align_interp['u_p']=u_prime
+            df_align_interp['v_p']=v_prime
+            df_align_interp['w_p']=w_prime
+            df_align_interp['T_p']=T_prime
+            df_align_interp['e_bar']=tke_avg
+            df_align_interp['U_horiz']=U_horiz
+            df_align_interp['U_streamwise']=U_streamwise
             # print('created new DF')
             df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             print('done with ' +filename)
@@ -95,32 +102,42 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port2/"
             df_align_interp = pd.read_csv(file)
+            # print('read in file')                        
             u_prime = np.array(signal.detrend(df_align_interp['Ur']))
             v_prime = np.array(signal.detrend(df_align_interp['Vr']))
             w_prime = np.array(signal.detrend(df_align_interp['Wr']))
             T_prime = np.array(signal.detrend(df_align_interp['T']))
-           
+            # print('did detrend')
             U = np.array(df_align_interp['u'])
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
-            u_bar = np.ones(len(df_align_interp))*(df_align_interp['Ur'].mean())
-            T_bar = np.ones(len(df_align_interp))*(df_align_interp['T'].mean())            
+            # print('did this too')
             U_horiz = []
             U_streamwise = []
-            tke = []
+            # tke = []
             for i in range(len(df_align_interp)):
                 U_horizontal_i = math.sqrt((U[i]**2)+(V[i]**2))
                 U_horiz.append(U_horizontal_i)
                 U_streamwise_i = math.sqrt((U[i]**2)+(V[i]**2)+(W[i]**2))
                 U_streamwise.append(U_streamwise_i)
                 # wind_dir = math.atan3(v_orig_comp[i],u_orig_comp[i])
-                tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
-                tke.append(tke_i)
+                # tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
+                # tke.append(tke_i)
+            # print('did orig TKE')
             tke_avg = np.ones(len(df_align_interp))*(0.5*((np.mean(u_prime**2))+(np.mean(v_prime**2))+(np.mean(w_prime**2))))   
-            df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
-                                   T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
-                                   U_streamwise = 'U_streamwise')
+            # print('did average tke')
+            # df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
+            #                        T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
+            #                        U_streamwise = 'U_streamwise')
+            df_align_interp['u_p']=u_prime
+            df_align_interp['v_p']=v_prime
+            df_align_interp['w_p']=w_prime
+            df_align_interp['T_p']=T_prime
+            df_align_interp['e_bar']=tke_avg
+            df_align_interp['U_horiz']=U_horiz
+            df_align_interp['U_streamwise']=U_streamwise
+            # print('created new DF')
             df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             print('done with ' +filename)
             
@@ -128,30 +145,42 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port3/"
             df_align_interp = pd.read_csv(file)
+            # print('read in file')                        
             u_prime = np.array(signal.detrend(df_align_interp['Ur']))
             v_prime = np.array(signal.detrend(df_align_interp['Vr']))
             w_prime = np.array(signal.detrend(df_align_interp['Wr']))
             T_prime = np.array(signal.detrend(df_align_interp['T']))
-           
+            # print('did detrend')
             U = np.array(df_align_interp['u'])
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
+            # print('did this too')
             U_horiz = []
             U_streamwise = []
-            tke = []
+            # tke = []
             for i in range(len(df_align_interp)):
                 U_horizontal_i = math.sqrt((U[i]**2)+(V[i]**2))
                 U_horiz.append(U_horizontal_i)
                 U_streamwise_i = math.sqrt((U[i]**2)+(V[i]**2)+(W[i]**2))
                 U_streamwise.append(U_streamwise_i)
                 # wind_dir = math.atan3(v_orig_comp[i],u_orig_comp[i])
-                tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
-                tke.append(tke_i)                
+                # tke_i = 0.5*((u_prime[i]**2)+(v_prime[i]**2)+(w_prime[i]**2))
+                # tke.append(tke_i)
+            # print('did orig TKE')
             tke_avg = np.ones(len(df_align_interp))*(0.5*((np.mean(u_prime**2))+(np.mean(v_prime**2))+(np.mean(w_prime**2))))   
-            df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
-                                   T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
-                                   U_streamwise = 'U_streamwise')          
+            # print('did average tke')
+            # df_align_interp.assign(u_prime='u_p', v_prime='v_p', w_prime='w_p', 
+            #                        T_prime='T_p', tke = 'tke', tke_avg='tke_avg', U_horiz = 'U_horiz',
+            #                        U_streamwise = 'U_streamwise')
+            df_align_interp['u_p']=u_prime
+            df_align_interp['v_p']=v_prime
+            df_align_interp['w_p']=w_prime
+            df_align_interp['T_p']=T_prime
+            df_align_interp['e_bar']=tke_avg
+            df_align_interp['U_horiz']=U_horiz
+            df_align_interp['U_streamwise']=U_streamwise
+            # print('created new DF')
             df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             print('done with ' +filename)
             
