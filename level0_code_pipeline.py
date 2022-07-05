@@ -157,267 +157,92 @@ filepath= r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved"
 for root, dirnames, filenames in os.walk(filepath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
-        colspecs_port123 = [(1, 7), (9, 14), (16, 21), (25, 29), (30, 32),(34,36)] #set the length of each column from text .dat file
-        colspecs_port4 = [(1,3), (4, 6), (7, 13), (14, 20), (21, 27),(28,34),(36,38)]
+        # colspecs_port123 = [(1, 7), (9, 14), (16, 21), (25, 29), (30, 32),(34,36)] #set the length of each column from text .dat file
+        # colspecs_port4 = [(1,3), (4, 6), (7, 13), (14, 20), (21, 27),(28,34),(36,38)]
         if filename.startswith("mNode_Port1"):
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port1/"
             path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
-            try:
-                try:
-                    try:                         
-                        s1_df = pd.read_fwf(file, colspecs=colspecs_port123, index_col=None, header = None) #read file into df
-                        s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
-                        s1_df = s1_df[['u', 'v', 'w', 'T',]]
-                        s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s1_df) #perform align wind function
-                        # print('TRY, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
-                        # print('TRY, despike lines worked')
-                        df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
-                        # print('TRY, interpolate worked')
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
-                        print('TRY worked, '+filename)
-                        
-                    except:
-                        s1_df = pd.read_fwf(file, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None) #same as 'try' section, but excluding the first line if it's incomplete
-                        s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                        s1_df = s1_df[['u', 'v', 'w', 'T',]]
-                        s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s1_df)
-                        # print('EXCEPT 1, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('EXCEPT 1, despike lines worked')                                             
-                        df_align_interp = interp_sonics123(df_aligned)
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('EXCEPT 1, interpolate worked')        
-                        print('EXCEPT 1 worked, '+ filename)
-
-                except:
-                    s1_df = pd.read_fwf(file, skipfooter=1, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None) #same as 'try' section, but excluding the first and last line if they are both incomplete
-                    s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                    s1_df = s1_df[['u', 'v', 'w', 'T',]]
-                    s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                    df_aligned = alignwind(s1_df)
-                    # print('EXCEPT 2, df_aligned worked')
-                    df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                    df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                    df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                    # print('EXCEPT 2, despike lines worked')                    
-                    df_align_interp = interp_sonics123(df_aligned)
-                    df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                    df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                    df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                    # print('EXCEPT 2, interpolate worked')                    
-                    print('EXCEPT 2 worked, '+ filename)                                    
-            except ValueError:
-                df_align_interp = pd.DataFrame(np.nan, index = range(0,38400), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index = range(0,19200), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                print('********************* Error occurred, '+ filename)
-                
-        elif filename.startswith('mNode_Port2'):
+            s1_df = pd.read_csv(file, index_col=None, header = None) #read file into df
+            s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
+            s1_df = s1_df[['u', 'v', 'w', 'T',]]
+            s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            df_aligned = alignwind(s1_df) #perform align wind function
+            # print('TRY, df_aligned worked')
+            df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+            df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+            df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+            # print('TRY, despike lines worked')
+            df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
+            # print('TRY, interpolate worked')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+            df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
+            print('TRY worked, '+filename)
+            
+        elif filename.startswith("mNode_Port2"):
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port2/"
-            try:
-                try:
-                    try: 
-                        s2_df = pd.read_fwf(file, colspecs=colspecs_port123, index_col=None, header = None)
-                        s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                        s2_df = s2_df[['u', 'v', 'w', 'T',]]
-                        s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s2_df)
-                        # print('TRY, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('TRY, despike lines worked')
-                        df_align_interp = interp_sonics123(df_aligned)
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('TRY, interpolate worked')                       
-                        print('TRY worked, '+filename)
-                      
-                    except:
-                        s2_df = pd.read_fwf(file, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None)
-                        s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                        s2_df = s2_df[['u', 'v', 'w', 'T',]]
-                        s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s2_df)
-                        # print('EXCEPT 1, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('EXCEPT 1, despike lines worked')
-                        df_align_interp = interp_sonics123(df_aligned)
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('EXCEPT 1, interpolate worked')                       
-                        print('EXCEPT 1 worked, '+ filename)
-
-                except:    
-                    s2_df = pd.read_fwf(file, skipfooter=1, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None)
-                    s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                    s2_df = s2_df[['u', 'v', 'w', 'T',]]
-                    s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                    df_aligned = alignwind(s2_df)
-                    # print('EXCEPT 2, df_aligned worked')
-                    df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                    df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                    df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                    # print('EXCEPT 2, despike lines worked')
-                    df_align_interp = interp_sonics123(df_aligned)
-                    df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                    df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                    df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                    # print('EXCEPT 2, interpolate worked')                   
-                    print('EXCEPT 2 worked, '+ filename)                                       
-            except ValueError:
-                df_align_interp = pd.DataFrame(np.nan, index = range(0,38400), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index = range(0,19200), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                print('********************* Error occurred, '+ filename)            
-                
-        elif filename.startswith('mNode_Port3'):
+            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
+            s2_df = pd.read_csv(file, index_col=None, header = None) #read file into df
+            s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
+            s2_df = s2_df[['u', 'v', 'w', 'T',]]
+            s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            df_aligned = alignwind(s2_df) #perform align wind function
+            # print('TRY, df_aligned worked')
+            df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+            df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+            df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+            # print('TRY, despike lines worked')
+            df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
+            # print('TRY, interpolate worked')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+            df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
+            print('Port 2 worked, '+filename)
+            
+        elif filename.startswith("mNode_Port3"):
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port3/"
-            try:
-                try:
-                    try: 
-                        s3_df = pd.read_fwf(file, colspecs=colspecs_port123, index_col=None, header = None)
-                        s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                        s3_df = s3_df[['u', 'v', 'w', 'T',]]
-                        s3_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s3_df)
-                        # print('TRY, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('TRY, despike lines worked')
-                        df_align_interp = interp_sonics123(df_aligned)
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('TRY, interpolate worked')                       
-                        print('TRY worked, '+filename)
-
-                    except:
-                        s3_df = pd.read_fwf(file, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None)
-                        s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                        s3_df = s3_df[['u', 'v', 'w', 'T',]]
-                        s3_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s3_df)
-                        # print('TRY, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('TRY, despike lines worked')
-                        df_align_interp = interp_sonics123(df_aligned)
-                        df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('TRY, interpolate worked')                       
-                        print('EXCEPT 1 worked, '+ filename)
-
-                except:
-                    s1_df = pd.read_fwf(file, skipfooter=1, skiprows=1, colspecs=colspecs_port123, index_col=None, header = None)
-                    s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum']
-                    s3_df = s3_df[['u', 'v', 'w', 'T',]]
-                    s3_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                    df_aligned = alignwind(s3_df)
-                    # print('TRY, df_aligned worked')
-                    df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                    df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                    df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                    # print('TRY, despike lines worked')
-                    df_align_interp = interp_sonics123(df_aligned)
-                    df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                    df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                    df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                    # print('TRY, interpolate worked')                   
-                    print('EXCEPT 2 worked, '+ filename)                                      
-            except ValueError:
-                df_align_interp = pd.DataFrame(np.nan, index = range(0,38400), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')#                 
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index = range(0,19200), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                print('********************* Error occurred, '+ filename)                
-                
+            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
+            s3_df = pd.read_csv(file, index_col=None, header = None) #read file into df
+            s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
+            s3_df = s3_df[['u', 'v', 'w', 'T',]]
+            s3_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            df_aligned = alignwind(s3_df) #perform align wind function
+            # print('TRY, df_aligned worked')
+            df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+            df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+            df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+            # print('TRY, despike lines worked')
+            df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
+            # print('TRY, interpolate worked')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+            df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
+            print('Port 3 worked, '+filename)
+            
         elif filename.startswith("mNode_Port4"):
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port4/"
-            try:
-                try:
-                    try: 
-                        s4_df =pd.read_fwf(file, colspecs=colspecs_port4, index_col=None, header = None)
-                        s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']
-                        s4_df = s4_df[['u', 'v', 'w', 'T',]]
-                        s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s4_df)
-                        # print('TRY, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('TRY, despike lines worked')
-                        df_align_interp_s4 = interp_sonics4(df_aligned)
-                        df_align_interp_s4.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('TRY, interpolate worked')                       
-                        print('TRY worked, '+filename)
+            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
+            s4_df =pd.read_fwf(file, index_col=None, header = None)
+            s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']
+            s4_df = s4_df[['u', 'v', 'w', 'T',]]
+            s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            df_aligned = alignwind(s4_df) #perform align wind function
+            # print('TRY, df_aligned worked')
+            df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+            df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+            df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+            # print('TRY, despike lines worked')
+            df_align_interp = interp_sonics4(df_aligned) #interpolating to the sensor's frequency                       
+            # print('TRY, interpolate worked')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+            df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
+            print('Port 4 worked, '+filename)
 
-                    except:
-                        s4_df =pd.read_fwf(file, skiprows=1, colspecs=colspecs_port4, index_col=None, header = None)
-                        s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']                        
-                        s4_df = s4_df[['u', 'v', 'w', 'T',]]
-                        s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                        df_aligned = alignwind(s4_df)
-                        # print('EXCEPT 1, df_aligned worked')
-                        df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                        df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                        df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                        # print('EXCEPT 1, despike lines worked')
-                        df_align_interp_s4 = interp_sonics4(df_aligned)
-                        df_align_interp_s4.to_csv(path_save+str(filename_only)+'_1.csv')
-                        df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                        df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                        # print('EXCEPT 1, interpolate worked')                       
-                        print('EXCEPT 1 worked, '+ filename)
-                except:
-                    s4_df =pd.read_fwf(file, skiprows=1, skipfooter=1, colspecs=colspecs_port4, index_col=None, header = None)
-                    s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']                        
-                    s4_df = s4_df[['u', 'v', 'w', 'T',]]
-                    s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-                    df_aligned = alignwind(s4_df)
-                    # print('EXCEPT 2, df_aligned worked')
-                    df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x)
-                    df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x)
-                    df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x)
-                    # print('EXCEPT 2, despike lines worked')
-                    df_align_interp_s4 = interp_sonics4(df_aligned)
-                    df_align_interp_s4.to_csv(path_save+str(filename_only)+'_1.csv')
-                    df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                    df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                    # print('EXCEPT 2, interpolate worked')                    
-                    print('EXCEPT 2 worked, '+ filename)
-            except ValueError:
-                df_align_interp = pd.DataFrame(np.nan, index = range(0,24000), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv')
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index = range(0,19200), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-                print('********************* Error occurred, '+ filename)               
         
         elif filename.startswith('mNode_Port5'):
             # Yday, Batt V, Tpan, Tair1, Tair2,  TIR, Pair, RH1, RH2, Solar, IR, IR ratio, Fix, GPS, Nsat
