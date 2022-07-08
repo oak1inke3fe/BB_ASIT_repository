@@ -51,7 +51,9 @@ def alignwind(wind_df):
     Wb = wind_df['w'].mean()
     Sb = math.sqrt((Ub**2)+(Vb**2))
     beta = math.atan2(Wb,Sb)
+    beta_arr = np.ones(len(wind_df))*beta
     alpha = math.atan2(Vb,Ub)
+    alpha_arr = np.ones(len(wind_df))*alpha
     x1 = wind_df.index
     x = np.array(x1)
     Ur = wind_df['u']*math.cos(alpha)*math.cos(beta)+wind_df['v']*math.sin(alpha)*math.cos(beta)+wind_df['w']*math.sin(beta)
@@ -68,12 +70,12 @@ def alignwind(wind_df):
     # b = beta*180/math.pi
     # a = alpha*180/math.pi
     # df_abSbComponents = pd.DataFrame({'alpha':a, 'beta':b, 'Uhoriz_raw':Sb})
-    df_aligned = pd.DataFrame({'base_index':x,'Ur':Ur_arr,'Vr':Vr_arr,'Wr':Wr_arr,'T':T_arr,'u':u_arr,'v':v_arr,'w':w_arr})
+    df_aligned = pd.DataFrame({'base_index':x,'Ur':Ur_arr,'Vr':Vr_arr,'Wr':Wr_arr,'T':T_arr,'u':u_arr,'v':v_arr,'w':w_arr,'alpha':alpha_arr,'beta':beta_arr})
 
     return df_aligned
 #######################################################################################
 ### function end
-# returns: S,b,a,df_aligned
+# returns: df_aligned (index, Ur, Vr, Wr, T, u, v, w, alpha, beta)
 print('done with alignwind function')
 
 #%%
