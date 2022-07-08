@@ -26,6 +26,7 @@ Ports 1, 2, 3, 4:
     tke = tke, 
     u_horizontal = U_horiz, 
     u_streamwise = U_streamwise
+    epsilon = epsilon
 Port 5:
     IRt
 Port 6:
@@ -70,6 +71,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
             # print('did this too')
+            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -113,6 +115,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
             # print('did this too')
+            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -156,6 +159,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
             # print('did this too')
+            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -199,6 +203,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
             # print('did this too')
+            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
