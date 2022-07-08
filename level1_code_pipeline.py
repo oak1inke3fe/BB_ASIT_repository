@@ -56,7 +56,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
         if filename.startswith("mNode_Port1"):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port1/"
             df_align_interp = pd.read_csv(file)
             # print('read in file')                        
@@ -99,7 +99,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port2'):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port2/"
             df_align_interp = pd.read_csv(file)
             # print('read in file')                        
@@ -142,7 +142,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port3'):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port3/"
             df_align_interp = pd.read_csv(file)
             # print('read in file')                        
@@ -185,7 +185,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with ' +filename)
             
         elif filename.startswith("mNode_Port4"):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port4/"
             df_align_interp = pd.read_csv(file)
             # print('read in file')                        
@@ -228,7 +228,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port5'):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port5/"
             s5_df = pd.read_csv(file)
             sigma_sb = 5.67*(10**(-8))
@@ -238,7 +238,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port6'):
-            filename_only = filename[:-4]
+            filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port6/"
             if filename.endswith('L1_1.csv'):
                 s6_df1 = pd.read_csv(file)
