@@ -183,8 +183,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_sonic2paros_interp = interp_sonics2paros(df_aligned)
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
+                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 1 ran: '+filename)
@@ -210,8 +210,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_sonic2paros_interp = interp_sonics2paros(df_aligned)
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
+                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 2 ran: '+filename)
@@ -237,8 +237,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_sonic2paros_interp = interp_sonics2paros(df_aligned)
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
+                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 3 ran: '+filename)
@@ -264,8 +264,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_sonic2paros_interp = interp_sonics2paros(df_aligned)
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
             else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w'])
+                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 4 ran: '+filename)
