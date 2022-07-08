@@ -4,12 +4,16 @@ Created on Tue Jul  5 09:40:48 2022
 
 @author: oaklin keefe
 
-This is Level 0 pipeline: taking raw .dat files and turning them into a .csv file                                                                                          
-
+This is Level 00 pipeline: taking raw .dat files and turning them into a .txt file                                                                                          
+First we read in the files and make sure there are enough input lines to process, and if so
+then we run reg-exs to make sure the lines don't have any errors, before we save as a text file
+with commas separating the columns so that we can later read it in as a .csv file without any
+trouble.
 Input:
     .dat files per 20 min period per port from *raw_CAN_edit folder
 Output:
-    .csv files per 20 min period per port into LEVEL_1 folder
+    .txt files per 20 min period per port into r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved" 
+    plus sub-folder
     
 """
 #%%
@@ -117,6 +121,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                     else:
                         new_line = ','.join(match.groups())
                         print(new_line, file=myFile)
+                        
         elif filename.startswith("mNode_Port6"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port6/"
             regex = r".{4}(\d{1})(\d{3,4}.{1}\d{1,})"
@@ -135,63 +140,22 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                     else:
                         new_line = ','.join(match.groups())
                         print(new_line, file=myFile)
-        #Need to come back to file 7
-        # elif filename.startswith("mNode_Port7"):
-        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port7/"
-        #     regex = r".{4}(\d{1})(\d{3,4}.{1}\d{1,})"
-        #     textfile = open(file, 'r')
-        #     matches = []
-        #     # reg = re.compile(regex)
-        #     for line in textfile:
-        #         matches.append(re.match(regex,line))
-        #     textfile.close()
-        #     newFileName = str(filename_only)+".txt"
-        #     lines = []
-        #     with open(os.path.join(path_save,newFileName), "w") as myFile:
-        #         for match in matches:
-        #             if match is None:
-        #                 print(r"Nan,Nan", file=myFile)
-        #             else:
-        #                 new_line = ','.join(match.groups())
-        #                 print(new_line, file=myFile)
-#%%
-# Testing below
-# filename = r"E:\mNode_test2folders\mN220509\mNode_Port4_20220509_100000.dat"
-# path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port1/"
-# regex = r".{4}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{2}\d{1,2}.{1}\d{2}.{4}"
-# # filename = r"E:\mNode_test2folders\mN220509\mNode_Port1_20220509_002000.dat"    
-
-# textfile = open(filename, 'r')
-# matches = []
-# reg = re.compile(regex)
-# for line in textfile:
-#     matches.append(re.match(regex,line))
-# textfile.close()
-# #%%
-
-# save_path = r'E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port1'
-
-# newFileName = "mNode_Port1_20220509_004000.txt"
-
-# import os.path
-# lines = []
-# with open(os.path.join(save_path,newFileName), "w") as myFile:
-#     for match in matches:
-#         if match is None:
-#             print(r"Nan,Nan,NaN,NaN,NaN,NaN", file=myFile)
-#         else:
-#             new_line = ','.join(match.groups())
-#             print(new_line, file=myFile)
-
-# # lines = []
-# # with open(filename+".txt",'w') as myFile:
-# #     for match in matches:
-# #         if match is None:
-# #             print(r"Nan,Nan,NaN,NaN,NaN,NaN", file=myFile)
-# #         else:
-# #             new_line = ','.join(match.groups())
-# #             print(new_line, file=myFile)
-
-# # df = pd.read_csv(myFile)
-# # matches_df.to_csv(path_save+'mNode_Port1_20220509_002000.csv')
-# print('done')
+                        
+        elif filename.startswith("mNode_Port7"):
+            path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port7/"
+            regex = r"[r](\d{1}.{1}\d{1,3}).{1}[a](\d{2}).{1}[q](\d{1,3})"
+            textfile = open(file, 'r')
+            matches = []
+            # reg = re.compile(regex)
+            for line in textfile:
+                matches.append(re.match(regex,line))
+            textfile.close()
+            newFileName = str(filename_only)+".txt"
+            lines = []
+            with open(os.path.join(path_save,newFileName), "w") as myFile:
+                for match in matches:
+                    if match is None:
+                        print(r"Nan,Nan,NaN", file=myFile)
+                    else:
+                        new_line = ','.join(match.groups())
+                        print(new_line, file=myFile)
