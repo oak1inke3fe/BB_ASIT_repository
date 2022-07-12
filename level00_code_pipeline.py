@@ -26,7 +26,7 @@ import re
 print('done with imports')
 
 #%%
-filepath= r"E:\mNode_test2folders\mN220509"
+filepath= r"E:\ASIT-research\BB-ASIT\Level0_RAW"
 for root, dirnames, filenames in os.walk(filepath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
