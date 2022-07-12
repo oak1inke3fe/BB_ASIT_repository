@@ -168,10 +168,12 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
             s1_df = pd.read_csv(file, index_col=None, header = None) #read file into df
             s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
-            s1_df = s1_df[['u', 'v', 'w', 'T',]]
+            s1_df = s1_df[['u', 'v', 'w', 'T',]]            
+            s1_df['u']=s1_df['u'].astype(float) 
+            s1_df['v']=s1_df['v'].astype(float)            
             s1_df['u']=-1*s1_df['u']
             s1_df['w']=-1*s1_df['w']
-            s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            # s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
             if (len(s1_df)>=3000) & (s1_df['u'].isna().sum()<1000):                                    
                 df_aligned = alignwind(s1_df) #perform align wind function
                 # print('TRY, df_aligned worked')
@@ -223,8 +225,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port3/"
             path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
             s3_df = pd.read_csv(file, index_col=None, header = None) #read file into df
-            s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
-            s3_df = s3_df[['u', 'v', 'w', 'T',]]
+            s3_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable          
             s3_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
             if (len(s3_df)>=3000) & (s3_df['u'].isna().sum()<1000):                                    
                 df_aligned = alignwind(s3_df) #perform align wind function
