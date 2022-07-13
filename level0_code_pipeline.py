@@ -246,56 +246,56 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         #     df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
         #     print('Port 3 ran: '+filename)
             
-        if filename.startswith("mNode_Port4"):
-            filename_only = filename[:-4]
-            path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port4/"
-            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
-            s4_df =pd.read_csv(file, index_col=None, header = None)
-            s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']
-            s4_df = s4_df[['u', 'v', 'w', 'T',]]
-            s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-            if (len(s4_df)>=3000) & (s4_df['u'].isna().sum()<1000):                                    
-                df_aligned = alignwind(s4_df) #perform align wind function
-                # print('TRY, df_aligned worked')
-                df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
-                df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
-                df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
-                # print('TRY, despike lines worked')
-                df_align_interp = interp_sonics4(df_aligned) #interpolating to the sensor's frequency                       
-                # print('TRY, interpolate worked')
-                # df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
-                df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
-            else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
-            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-            print('Port 4 ran: '+filename)
+        # elif filename.startswith("mNode_Port4"):
+        #     filename_only = filename[:-4]
+        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port4/"
+        #     path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
+        #     s4_df =pd.read_csv(file, index_col=None, header = None)
+        #     s4_df.columns =['chk_1','chk_2','u', 'v', 'w', 'T', 'err_code']
+        #     s4_df = s4_df[['u', 'v', 'w', 'T',]]
+        #     s4_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+        #     if (len(s4_df)>=3000) & (s4_df['u'].isna().sum()<1000):                                    
+        #         df_aligned = alignwind(s4_df) #perform align wind function
+        #         # print('TRY, df_aligned worked')
+        #         df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+        #         df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+        #         df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+        #         # print('TRY, despike lines worked')
+        #         df_align_interp = interp_sonics4(df_aligned) #interpolating to the sensor's frequency                       
+        #         # print('TRY, interpolate worked')
+        #         # df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+        #         df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+        #         # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
+        #     else:
+        #         df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+        #         df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+        #     df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+        #     df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
+        #     print('Port 4 ran: '+filename)
         
-        elif filename.startswith('mNode_Port5'):
-            # Yday, Batt V, Tpan, Tair1, Tair2,  TIR, Pair, RH1, RH2, Solar, IR, IR ratio, Fix, GPS, Nsat
-            # EX lines of data:
-            # 106.4999,12.02,10.18,9.63,9.75,10.8,1053,75.83,75.53,323.1,-83.8,0.646,0,0,0
-            # 106.4999,12.02,10.18,9.69,9.78,10.8,1053,75.83,75.26,323.1,-83.9,0.646,0,0,0
-            filename_only = filename[:-4]
-            path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port5/"
-            s5_df = pd.read_csv(file, index_col=None, header = None)
-            if (len(s5_df)>10)&(len(s5_df.columns)>=15):
-            # if len(s5_df)==1200: #if the files have enough lined to match the frequency, go ahead and save as csv
-                s5_df_met_interp = s5_df
-                s5_df.columns =['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
-                                'p_air', 'RH1', 'RH2', 'SW', 'IR', 'IR_ratio', 
-                                'fix', 'GPS', 'Nsat']
-                # s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
-            else:
-                s5_df = pd.DataFrame(np.nan, index=range(0,1), columns=['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
-                                'p_air', 'RH1', 'RH2', 'SW', 'IR', 'IR_ratio', 
-                                'fix', 'GPS', 'Nsat'])
-            s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
-            print('Port 5 ran: '+filename)
+        # elif filename.startswith('mNode_Port5'):
+        #     # Yday, Batt V, Tpan, Tair1, Tair2,  TIR, Pair, RH1, RH2, Solar, IR, IR ratio, Fix, GPS, Nsat
+        #     # EX lines of data:
+        #     # 106.4999,12.02,10.18,9.63,9.75,10.8,1053,75.83,75.53,323.1,-83.8,0.646,0,0,0
+        #     # 106.4999,12.02,10.18,9.69,9.78,10.8,1053,75.83,75.26,323.1,-83.9,0.646,0,0,0
+        #     filename_only = filename[:-4]
+        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port5/"
+        #     s5_df = pd.read_csv(file, index_col=None, header = None)
+        #     if (len(s5_df)>10)&(len(s5_df.columns)<16):
+        #     # if len(s5_df)==1200: #if the files have enough lined to match the frequency, go ahead and save as csv
+        #         s5_df_met_interp = s5_df
+        #         s5_df.columns =['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
+        #                         'p_air', 'RH1', 'RH2', 'SW', 'IR', 'IR_ratio', 
+        #                         'fix', 'GPS', 'Nsat']
+        #         # s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
+        #     else:
+        #         s5_df = pd.DataFrame(np.nan, index=range(0,1), columns=['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
+        #                         'p_air', 'RH1', 'RH2', 'SW', 'IR', 'IR_ratio', 
+        #                         'fix', 'GPS', 'Nsat'])
+        #     s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
+        #     print('Port 5 ran: '+filename)
                 
-        elif filename.startswith('mNode_Port6'):
+        if filename.startswith('mNode_Port6'):
             filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port6/"
             s6_df = pd.read_csv(file,index_col=None, header = None) #read into a df
@@ -312,7 +312,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
                 s6_df_1_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
             s6_df_1_interp.to_csv(path_save+str(filename_only)+'L1_1.csv') #save as csv
-            del df_paros_interp
+            # del df_paros_interp
                 # print('except paros 1'+ filename)
                 # try:
                 #     df_paros_interp = interp_paros(s6_df_1)
@@ -331,7 +331,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
                 s6_df_2_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
             s6_df_2_interp.to_csv(path_save+str(filename_only)+'L2_1.csv') #save as csv
-            del df_paros_interp
+            # del df_paros_interp
                 # print('except paros 2'+ filename)
             # try:
             #     df_paros_interp = interp_paros(s6_df_2)
@@ -350,7 +350,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
                 s6_df_3_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
             s6_df_3_interp.to_csv(path_save+str(filename_only)+'L3_1.csv') #save as csv
-            del df_paros_interp
+            # del df_paros_interp
                 # print('except paros 3' + filename)
             # try:
             #     df_paros_interp = interp_paros(s6_df_3)
@@ -366,29 +366,29 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             print('done with paros '+filename)
 
 
-### come back to this and make the bad lines NaNs instead of deleting them
-# then go back and check that this is done properly for the other ports as well.
-        elif filename.startswith('mNode_Port7'):
-            filename_only = filename[:-4]
-            path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port7/"
-            s7_df = pd.read_csv(file,index_col=None, header = None)
-            s7_df.columns =['range','amplitude','quality']
-            if s7_df['range'].isna().sum()<300: #make sure at least 75% of 20 minutes (at 1Hz frequency because of wave dropout) is recorded
-                # s7_df = s7_df['all'].str.split(';', expand=True) #now separate into different columns
-                # s7_df.columns =['range','amplitude','quality'] # name the columns
-                # s7_df['range'] = s7_df['range'].str.lstrip('r') #get rid of leading 'r' in range column
-                # s7_df['amplitude'] = s7_df['amplitude'].str.lstrip('a') #get rid of leading 'a' in amplitude column
-                # s7_df['quality'] = s7_df['quality'].str.lstrip('q') #get rid of leading 'q' in quality column
-                s7_df_interp = interp_lidar(s7_df) #interpolate to Lidar's sampling frequency
-            else:
-                s7_df_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['range','amplitude','quality'])
-            s7_df_interp.to_csv(path_save+str(filename_only)+'_1.csv') #save as csv
-            print('Port 7 ran for file: '+ filename)
-            print(len(s7_df_interp))
+# ### come back to this and make the bad lines NaNs instead of deleting them
+# # then go back and check that this is done properly for the other ports as well.
+#         elif filename.startswith('mNode_Port7'):
+#             filename_only = filename[:-4]
+#             path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port7/"
+#             s7_df = pd.read_csv(file,index_col=None, header = None)
+#             s7_df.columns =['range','amplitude','quality']
+#             if s7_df['range'].isna().sum()<300: #make sure at least 75% of 20 minutes (at 1Hz frequency because of wave dropout) is recorded
+#                 # s7_df = s7_df['all'].str.split(';', expand=True) #now separate into different columns
+#                 # s7_df.columns =['range','amplitude','quality'] # name the columns
+#                 # s7_df['range'] = s7_df['range'].str.lstrip('r') #get rid of leading 'r' in range column
+#                 # s7_df['amplitude'] = s7_df['amplitude'].str.lstrip('a') #get rid of leading 'a' in amplitude column
+#                 # s7_df['quality'] = s7_df['quality'].str.lstrip('q') #get rid of leading 'q' in quality column
+#                 s7_df_interp = interp_lidar(s7_df) #interpolate to Lidar's sampling frequency
+#             else:
+#                 s7_df_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['range','amplitude','quality'])
+#             s7_df_interp.to_csv(path_save+str(filename_only)+'_1.csv') #save as csv
+#             print('Port 7 ran for file: '+ filename)
+#             print(len(s7_df_interp))
         
-        else:
-            print("file doesn't start with mNode_Port 1-7")
-            continue
+#         else:
+#             print("file doesn't start with mNode_Port 1-7")
+#             continue
 
 
 print('done')
