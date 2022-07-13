@@ -70,8 +70,13 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
+
+            fs = 32 #sampling frequency of sonics 1-3
+            f, Pww = signal.welch(w_prime,fs,nperseg=1024) #pwelch function
+            #converting to wavenumber spectrum
+            k_arr = f/np.mean(U)*(2*math.pi)
+            Pww_k_arr = Pww*np.mean(U)/(2*math.pi)
             # print('did this too')
-            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -94,6 +99,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             df_align_interp['w_p']=w_prime
             df_align_interp['T_p']=T_prime
             df_align_interp['e_bar']=tke_avg
+            df_align_interp['Pww_k']=Pww_k_arr
+            df_align_interp['k_arr']=k_arr
             df_align_interp['U_horiz']=U_horiz
             df_align_interp['U_streamwise']=U_streamwise
             # print('created new DF')
@@ -114,8 +121,12 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
+            fs = 32 #sampling frequency of sonics 1-3
+            f, Pww = signal.welch(w_prime,fs,nperseg=1024) #pwelch function
+            #converting to wavenumber spectrum
+            k_arr = f/np.mean(U)*(2*math.pi)
+            Pww_k_arr = Pww*np.mean(U)/(2*math.pi)
             # print('did this too')
-            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -138,6 +149,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             df_align_interp['w_p']=w_prime
             df_align_interp['T_p']=T_prime
             df_align_interp['e_bar']=tke_avg
+            df_align_interp['Pww_k']=Pww_k_arr
+            df_align_interp['k_arr']=k_arr
             df_align_interp['U_horiz']=U_horiz
             df_align_interp['U_streamwise']=U_streamwise
             # print('created new DF')
@@ -158,8 +171,12 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
+            fs = 32 #sampling frequency of sonics 1-3
+            f, Pww = signal.welch(w_prime,fs,nperseg=1024) #pwelch function
+            #converting to wavenumber spectrum
+            k_arr = f/np.mean(U)*(2*math.pi)
+            Pww_k_arr = Pww*np.mean(U)/(2*math.pi)
             # print('did this too')
-            #add things in here for pwelch to find epsilon and PSD of w'
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -182,6 +199,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             df_align_interp['w_p']=w_prime
             df_align_interp['T_p']=T_prime
             df_align_interp['e_bar']=tke_avg
+            df_align_interp['Pww_k']=Pww_k_arr
+            df_align_interp['k_arr']=k_arr
             df_align_interp['U_horiz']=U_horiz
             df_align_interp['U_streamwise']=U_streamwise
             # print('created new DF')
@@ -202,8 +221,13 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             V = np.array(df_align_interp['v'])
             W = np.array(df_align_interp['w'])
             T = np.array(df_align_interp['T'])
+            fs = 20 #sampling frequency of sonic 4
+            f, Pww = signal.welch(w_prime,fs,nperseg=1024) #pwelch function
+            #converting to wavenumber spectrum
+            k_arr = f/np.mean(U)*(2*math.pi)
+            Pww_k_arr = Pww*np.mean(U)/(2*math.pi)
             # print('did this too')
-            #add things in here for pwelch to find epsilon and PSD of w'
+
             U_horiz = []
             U_streamwise = []
             # tke = []
@@ -226,6 +250,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             df_align_interp['w_p']=w_prime
             df_align_interp['T_p']=T_prime
             df_align_interp['e_bar']=tke_avg
+            df_align_interp['Pww_k']=Pww_k_arr
+            df_align_interp['k_arr']=k_arr
             df_align_interp['U_horiz']=U_horiz
             df_align_interp['U_streamwise']=U_streamwise
             # print('created new DF')
