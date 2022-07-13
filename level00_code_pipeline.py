@@ -33,7 +33,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         filename_only = filename[:-4]
         if filename.startswith("mNode_Port1"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port1/"
-            regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            # regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            regex = r"\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{1}(\S{2,})\s{1,}(\S{1,})"
             textfile = open(file, 'r')
             matches = []
             # reg = re.compile(regex)
@@ -51,7 +52,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                         print(new_line, file=myFile)
         elif filename.startswith("mNode_Port2"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port2/"
-            regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            # regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            regex = r"\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{1}(\S{2,})\s{1,}(\S{1,})"
             textfile = open(file, 'r')
             matches = []
             # reg = re.compile(regex)
@@ -69,7 +71,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                         print(new_line, file=myFile)
         elif filename.startswith("mNode_Port3"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port3/"
-            regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            # regex = r"\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{1,2}(.{1}\d{1,2}\D{1}\d{2})\s{2}(.{1}\d{1}\D{1}\d{2})\s{4}(\d{1}\D{1}\d{2})\s{1}(\S{2})\s{1,3}(\S{1,2})"
+            regex = r"\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{2,}([-]?\d*[.]?\d*)\s{1,}([-]?\d*[.]?\d*)\s{1}(\S{2,})\s{1,}(\S{1,})"
             textfile = open(file, 'r')
             matches = []
             # reg = re.compile(regex)
@@ -87,7 +90,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                         print(new_line, file=myFile)
         elif filename.startswith("mNode_Port4"):
             path_save = r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved\Port4/"
-            regex = r"(.{3}).{1}(\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{3})"
+            # regex = r"(.{3}).{1}(\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{1}\d{1,2}.{1}\d{2}).{1}(.{3})"
+            regex = r"\D{1}(\d*)[,]{1}([-+]?\d*[.]?\d*)[,]{1}([-+]?\d*[.]?\d*)[,]{1}([-+]?\d*[.]?\d*)[,]{1}([-+]?\d*[.]?\d*)[,]{1}([-+]?\d*[.]?\d*)[,]{1}\D{1}([[:alnum:]]*)"
             textfile = open(file, 'r')
             matches = []
             # reg = re.compile(regex)
