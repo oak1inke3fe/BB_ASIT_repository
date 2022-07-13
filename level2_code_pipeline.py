@@ -104,7 +104,11 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
                 s1_WpE_bar.append(WpE_bar_i)
                 s1_u_bar=np.array(df_sonic["u_bar"].mean())
                 s1_T_bar=np.array(df_sonic["T_bar"].mean())
-                mean_df1.assign(s1_UpWp_bar = '<UpWp>',s1_WpTp_bar = '<WpTp>',s1_WpE_bar = '<WpE>',s1_u_bar = '<u>',s1_T_bar = '<T>')    
+                c1 = 0.53                
+                goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+                epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+                epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+                mean_df1.assign(s1_UpWp_bar = '<UpWp>',s1_WpTp_bar = '<WpTp>',s1_WpE_bar = '<WpE>',s1_u_bar = '<u>',s1_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')    
         
         elif filename.startswith("mNode_Port2"):
                 df_sonic = pd.read_csv(filename)
@@ -127,7 +131,11 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
                 s2_WpE_bar.append(WpE_bar_i)
                 s2_u_bar=np.array(df_sonic["u_bar"].mean())
                 s2_T_bar=np.array(df_sonic["T_bar"].mean())            
-                mean_df2.assign(s2_UpWp_bar = '<UpWp>',s2_WpTp_bar = '<WpTp>',s2_WpE_bar = '<WpE>',s2_u_bar = '<u>',s2_T_bar = '<T>')                
+                c1 = 0.53                
+                goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+                epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+                epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+                mean_df2.assign(s2_UpWp_bar = '<UpWp>',s2_WpTp_bar = '<WpTp>',s2_WpE_bar = '<WpE>',s2_u_bar = '<u>',s2_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
         elif filename.startswith("mNode_Port3"):
                 df_sonic = pd.read_csv(filename)
@@ -150,7 +158,11 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
                 s3_WpE_bar.append(WpE_bar_i)
                 s3_u_bar=np.array(df_sonic["u_bar"].mean())
                 s3_T_bar=np.array(df_sonic["T_bar"].mean())
-                mean_df3.assign(s3_UpWp_bar = '<UpWp>',s3_WpTp_bar = '<WpTp>',s3_WpE_bar = '<WpE>',s3_u_bar = '<u>',s3_T_bar = '<T>')                
+                c1 = 0.53                
+                goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+                epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+                epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+                mean_df3.assign(s3_UpWp_bar = '<UpWp>',s3_WpTp_bar = '<WpTp>',s3_WpE_bar = '<WpE>',s3_u_bar = '<u>',s3_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
         elif filename.startswith("mNode_Port4"):
                 df_sonic = pd.read_csv(filename)
@@ -173,7 +185,11 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
                 s4_WpE_bar.append(WpE_bar_i)
                 s4_u_bar=np.array(df_sonic["u_bar"].mean())
                 s4_T_bar=np.array(df_sonic["T_bar"].mean())
-                mean_df4.assign(s4_UpWp_bar = '<UpWp>',s4_WpTp_bar = '<WpTp>',s4_WpE_bar = '<WpE>',s4_u_bar = '<u>',s4_T_bar = '<T>')                
+                c1 = 0.53                
+                goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+                epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+                epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+                mean_df4.assign(s4_UpWp_bar = '<UpWp>',s4_WpTp_bar = '<WpTp>',s4_WpE_bar = '<WpE>',s4_u_bar = '<u>',s4_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
         else:
             print('not ports 1-4')
