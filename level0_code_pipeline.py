@@ -187,7 +187,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
                 df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 1 ran: '+filename)
@@ -214,7 +214,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
                 df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 2 ran: '+filename)
@@ -240,7 +240,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             else:
                 df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 3 ran: '+filename)
@@ -267,7 +267,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')                     
             else:
                 df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
             df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
             df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
             print('Port 4 ran: '+filename)
@@ -288,7 +288,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                                 'fix', 'GPS', 'Nsat']
                 # s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
             else:
-                s5_df = pd.DataFrame(np.nan, index=range(0,1), columns=['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
+                s5_df = pd.DataFrame(np.nan, index=range(0), columns=['yearDay', 'bat_volt', 'pannel_T', 'T1', 'T2','TIR',
                                 'p_air', 'RH1', 'RH2', 'SW', 'IR', 'IR_ratio', 
                                 'fix', 'GPS', 'Nsat'])
             s5_df.to_csv(path_save+str(filename_only)+'_1.csv')
@@ -309,7 +309,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 s6_df_1_interp = df_paros_interp #rename                
                 # print('IF worked')
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
-                s6_df_1_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
+                s6_df_1_interp = pd.DataFrame(np.nan, index=range(0), columns=['sensor','p'])
             s6_df_1_interp.to_csv(path_save+str(filename_only)+'L1_1.csv') #save as csv
             # del df_paros_interp
                 # print('except paros 1'+ filename)
@@ -328,7 +328,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 s6_df_2_interp = df_paros_interp #rename                
                 # print('IF worked')
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
-                s6_df_2_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
+                s6_df_2_interp = pd.DataFrame(np.nan, index=range(0), columns=['sensor','p'])
             s6_df_2_interp.to_csv(path_save+str(filename_only)+'L2_1.csv') #save as csv
             # del df_paros_interp
                 # print('except paros 2'+ filename)
@@ -347,7 +347,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 s6_df_3_interp = df_paros_interp #rename                
                 # print('IF worked')
             else: #if not enough points, make a df of NaNs that is the size of a properly interpolated df
-                s6_df_3_interp = pd.DataFrame(np.nan, index=range(0,1), columns=['sensor','p'])
+                s6_df_3_interp = pd.DataFrame(np.nan, index=range(0), columns=['sensor','p'])
             s6_df_3_interp.to_csv(path_save+str(filename_only)+'L3_1.csv') #save as csv
             # del df_paros_interp
                 # print('except paros 3' + filename)
