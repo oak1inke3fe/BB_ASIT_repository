@@ -25,7 +25,8 @@ import os
 # import matplotlib.pyplot as plt
 import natsort
 # import statistics
-# import time
+import time
+import datetime
 import math
 # from scipy import interpolate
 # import re
@@ -157,6 +158,7 @@ print('done with interp_lidar function')
 # df_abSbComps_3 = pd.DataFrame(columns=['alpha','beta','Uhoriz_orig'])
 # df_abSbComps_4 = pd.DataFrame(columns=['alpha','beta','Uhoriz_orig'])
 filepath= r"E:\ASIT-research\BB-ASIT\Level1_errorLinesRemoved"
+start=datetime.datetime.now()
 for root, dirnames, filenames in os.walk(filepath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
@@ -389,6 +391,8 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
 #             print("file doesn't start with mNode_Port 1-7")
 #             continue
 
-
+end = datetime.datetime.now()
 print('done')
+print(start)
+print(end)
 
