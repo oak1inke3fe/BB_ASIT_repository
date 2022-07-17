@@ -45,13 +45,14 @@ import os
 # import matplotlib.pyplot as plt
 import natsort
 # import time
+import datetime
 import math
 # from scipy import interpolate
 import scipy.signal as signal
 # os.chdir(r'E:\mNode_test2folders\test')
 print('done with imports')
 #%%
-
+start=datetime.datetime.now()
 filepath= r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp"
 for root, dirnames, filenames in os.walk(filepath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
@@ -125,6 +126,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         elif filename.startswith('mNode_Port2'):
             filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port2/"
+            path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
             df_align_interp = pd.read_csv(file)
             # print('read in file')     
             if len(df_align_interp) > 2:                   
@@ -187,6 +189,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         elif filename.startswith('mNode_Port3'):
             filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port3/"
+            path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
             df_align_interp = pd.read_csv(file)
             # print('read in file')            
             if len(df_align_interp) > 2:            
@@ -248,6 +251,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             
         elif filename.startswith("mNode_Port4"):
             filename_only = filename[:-6]
+            path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port4/"
             df_align_interp = pd.read_csv(file)
             # print('read in file')      
@@ -313,10 +317,15 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             filename_only = filename[:-6]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port5/"
             s5_df = pd.read_csv(file)
-            sigma_sb = 5.67*(10**(-8))
-            IRt = s5_df['IR'] + sigma_sb*(s5_df['TIR']+273.16)**4
-            s5_df.assign(IRt = 'IRt')
-            s5_df.to_csv(path_save+str(filename_only)+'_2.csv')
+            if len(s5_df)>1:
+                sigma_sb = 5.67*(10**(-8))                
+                IRt = s5_df['IR'] + sigma_sb*(s5_df['TIR']+273.16)**4
+                s5_df['IRt'] = IRt
+                # s5_df.assign(IRt = 'IRt')
+                s5_df.to_csv(path_save+str(filename_only)+'_2.csv')
+            else:
+                s5_df['IRt'] = np.nan
+                s5_df.to_csv(path_save+str(filename_only)+'_2.csv')
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port6'):
@@ -324,26 +333,40 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port6/"
             if filename.endswith('L1_1.csv'):
                 s6_df1 = pd.read_csv(file)
-                p_prime_L1 = np.array(signal.detrend(s6_df1['p'])) #detrending produced the 'prime' term
-                s6_df1.assign(p_prime_L1 = 'p_prime')
-                s6_df1.to_csv(path_save+str(filename_only)+'L1_2.csv')                
+                if len(s6_df1)>1:
+                    p_prime_L1 = np.array(signal.detrend(s6_df1['p'])) #detrending produced the 'prime' term
+                    s6_df1['p_prime'] = p_prime_L1
+                    # s6_df1.assign(p_prime_L1 = 'p_prime') 
+                else:
+                    s6_df1['p_prime'] = np.nan
+                s6_df1.to_csv(path_save+str(filename_only)+'L1_2.csv')
             elif filename.endswith('L2_1.csv'):
                 s6_df2 = pd.read_csv(file)
-                p_prime_L2 = np.array(signal.detrend(s6_df2['p']))
-                s6_df2.assign(p_prime_L2 = 'p_prime')
-                s6_df2.to_csv(path_save+str(filename_only)+'L2_2.csv')
+                if len(s6_df2)>1:
+                    p_prime_L2 = np.array(signal.detrend(s6_df2['p']))
+                    s6_df2['p_prime'] = p_prime_L2
+                    # s6_df2.assign(p_prime_L2 = 'p_prime')                    
+                else:
+                    s6_df2['p_prime'] = np.nan
+                s6_df1.to_csv(path_save+str(filename_only)+'L1_2.csv') 
             elif filename.endswith('L3_1.csv'):
                 s6_df3 = pd.read_csv(file)
-                p_prime_L3 = np.array(signal.detrend(s6_df3['p']))
-                s6_df3.assign(p_prime_L3 = 'p_prime')
+                if len(s6_df3)>1:
+                    p_prime_L3 = np.array(signal.detrend(s6_df3['p']))
+                    s6_df3['p_prime'] = p_prime_L3
+                else:
+                    s6_df3['p_prime'] = np.nan
                 s6_df3.to_csv(path_save+str(filename_only)+'L3_2.csv')
-            print('done with port 6')
-        else:
-            print("file doesn't start with mNode_Port 1-6")
-            continue
+            print('done with port 6'+filename)
+        # else:
+        #     print("file doesn't start with mNode_Port 1-6")
+        #     continue
         continue
 # s1 = np.transpose(s1_align)
 print('done')
+end =datetime.datetime.now()
+print(start)
+print(end)
 # #%%
 # bps = df_aligned.isnull().any(axis=1).sum()
 # print(bps)
