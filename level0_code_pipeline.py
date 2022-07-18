@@ -52,9 +52,9 @@ def alignwind(wind_df):
     Wb = wind_df['w'].mean()
     Sb = math.sqrt((Ub**2)+(Vb**2))
     beta = math.atan2(Wb,Sb)
-    beta_arr = np.ones(len(wind_df))*beta
+    beta_arr = np.ones(len(wind_df))*(beta*180/math.pi)
     alpha = math.atan2(Vb,Ub)
-    alpha_arr = np.ones(len(wind_df))*alpha
+    alpha_arr = np.ones(len(wind_df))*(alpha*180/math.pi)
     x1 = wind_df.index
     x = np.array(x1)
     Ur = wind_df['u']*math.cos(alpha)*math.cos(beta)+wind_df['v']*math.sin(alpha)*math.cos(beta)+wind_df['w']*math.sin(beta)
