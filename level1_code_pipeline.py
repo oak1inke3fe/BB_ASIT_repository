@@ -42,7 +42,7 @@ import numpy as np
 import pandas as pd
 # from pandas import rolling_median
 import os
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import natsort
 # import time
 import datetime
@@ -110,7 +110,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['U_horiz']=U_horiz
                 df_align_interp['U_streamwise']=U_streamwise
                 # print('created new DF')
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+                # df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             else:
                 df_align_interp['u_p']=np.nan
                 df_align_interp['v_p']=np.nan
@@ -120,8 +120,17 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['U_horiz']=np.nan
                 df_align_interp['U_streamwise']=np.nan
                 df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            # plt.plot(u_prime)
+            # plt.plot(v_prime)
+            # plt.plot(w_prime)
+            # plt.plot(T_prime)
+            # plt.plot(tke_avg) 
+            # plt.draw()
+            # plt.pause(0.0001)
+            # plt.clf()
             print('done with ' +filename)
+            
             
         elif filename.startswith('mNode_Port2'):
             filename_only = filename[:-6]
@@ -174,7 +183,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['U_horiz']=U_horiz
                 df_align_interp['U_streamwise']=U_streamwise
                 # print('created new DF')
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+                # df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             else:
                 df_align_interp['u_p']=np.nan
                 df_align_interp['v_p']=np.nan
@@ -183,7 +192,15 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['e_bar']=np.nan
                 df_align_interp['U_horiz']=np.nan
                 df_align_interp['U_streamwise']=np.nan
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            # plt.plot(u_prime)
+            # plt.plot(v_prime)
+            # plt.plot(w_prime)
+            # plt.plot(T_prime)
+            # plt.plot(tke_avg) 
+            # plt.draw()
+            # plt.pause(0.0001)
+            # plt.clf()
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port3'):
@@ -237,7 +254,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['U_horiz']=U_horiz
                 df_align_interp['U_streamwise']=U_streamwise
                 # print('created new DF')
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+                # df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             else:
                 df_align_interp['u_p']=np.nan
                 df_align_interp['v_p']=np.nan
@@ -246,7 +263,16 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['e_bar']=np.nan
                 df_align_interp['U_horiz']=np.nan
                 df_align_interp['U_streamwise']=np.nan
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+                
+            df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            # plt.plot(u_prime)
+            # plt.plot(v_prime)
+            # plt.plot(w_prime)
+            # plt.plot(T_prime)
+            # plt.plot(tke_avg) 
+            # plt.draw()
+            # plt.pause(0.0001)
+            # plt.clf()
             print('done with ' +filename)
             
         elif filename.startswith("mNode_Port4"):
@@ -301,7 +327,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['U_horiz']=U_horiz
                 df_align_interp['U_streamwise']=U_streamwise
                 # print('created new DF')
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+                # df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
             else:
                 df_align_interp['u_p']=np.nan
                 df_align_interp['v_p']=np.nan
@@ -310,7 +336,15 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
                 df_align_interp['e_bar']=np.nan
                 df_align_interp['U_horiz']=np.nan
                 df_align_interp['U_streamwise']=np.nan
-                df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            df_align_interp.to_csv(path_save+str(filename_only)+'_2.csv')
+            # plt.plot(u_prime)
+            # plt.plot(v_prime)
+            # plt.plot(w_prime)
+            # plt.plot(T_prime)
+            # plt.plot(tke_avg) 
+            # plt.draw()
+            # plt.pause(0.0001)
+            # plt.clf()
             print('done with ' +filename)
             
         elif filename.startswith('mNode_Port5'):
