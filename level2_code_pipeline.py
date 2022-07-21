@@ -43,7 +43,7 @@ import os
 import matplotlib.pyplot as plt
 import natsort
 import statistics
-# import time
+import datetime
 import math
 import scipy.signal as signal
 # os.chdir(r'E:\mNode_test2folders\test')
@@ -81,11 +81,12 @@ s1_T_bar = []
 
 path_saveA = r"E:\ASIT-research\BB-ASIT\Level3_mean\other/"
 folderPath= r"E:\ASIT-research\BB-ASIT\Level2_analysis\port1"
+start=datetime.datetime.now()
 for root, dirnames,filenames in os.walk(folderPath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
         if filename.startswith("mNode_Port1"):
-        # file = os.path.join(root, filename)                
+            filename_only = filename[:-4]
             df_sonic = pd.read_csv(file)
             #variables from the dataframe: 
                 # <u> = u_bar, 
@@ -121,11 +122,12 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
             # epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
             # epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
             
-# mean_df1['<UpWp>']=final_port1_UpWp_bar
-# mean_df1['<WpTp>']=final_port1_WpTp_bar
-# mean_df1['<WpE>']=final_port1_WpE_bar
-# mean_df1['<u>']=final_port1_u_bar
-# mean_df1['<T>']=final_port1_T_bar
+mean_df1['<UpWp>']=s1_UpWp_bar
+mean_df1['<WpTp>']=s1_WpTp_bar
+mean_df1['<WpE>']=s1_WpE_bar
+mean_df1['<u>']=s1_u_bar
+mean_df1['<T>']=s1_T_bar
+mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
 
 
         
@@ -218,11 +220,31 @@ for root, dirnames,filenames in os.walk(folderPath): #this is for looping throug
     # mean_df3.to_csv(path_saveA+'sonic3'+'_meanComponents.csv')
     # mean_df4.to_csv(path_saveA+'sonic4'+'_meanComponents.csv')
 print('done')
-        
+end = datetime.datetime.now()
+print(start)
+print(end)  
 #%%
-plt.plot(s1_UpWp_bar)
-
-
+plt.plot(s1_u_bar, label = '<u>')
+plt.legend()
+plt.title('<u> time series April 14-May 15, 2022')
+#%%
+plt.plot(s1_T_bar, label = '<T>')
+plt.legend()
+plt.title('<T> time series April 14-May 15, 2022')
+#%%
+plt.plot(s1_UpWp_bar, label = "<u'w'>")
+plt.legend()
+plt.title("<u'w'> time series April 14-May 15, 2022")
+#%%
+plt.plot(s1_WpTp_bar, label = "<w'T'>")
+plt.legend()
+plt.ylim(-0.2,0.2)
+plt.title("<w'T'> time series April 14-May 15, 2022")
+#%%
+plt.plot(s1_WpE_bar, label = "<w'e>")
+plt.legend()
+plt.ylim(-0.00001,0.00001)
+plt.title("<w'e> time series April 14-May 15, 2022")
 #%%
 s1_WpPp = []
 s2_WpPp = []
