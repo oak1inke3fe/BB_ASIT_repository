@@ -58,7 +58,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
         if filename.startswith("mNode_Port1"):
-            filename_only = filename[:-6]
+            filename_only = filename[:-4]
             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port1/"
             path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
             df_align_interp = pd.read_csv(file)            
@@ -135,7 +135,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
             
             
 #         elif filename.startswith('mNode_Port2'):
-#             filename_only = filename[:-6]
+#             filename_only = filename[:-4]
 #             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port2/"
 #             path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
 #             df_align_interp = pd.read_csv(file)
@@ -206,7 +206,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
 #             print('done with ' +filename)
             
 #         elif filename.startswith('mNode_Port3'):
-#             filename_only = filename[:-6]
+#             filename_only = filename[:-4]
 #             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port3/"
 #             path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
 #             df_align_interp = pd.read_csv(file)
@@ -278,7 +278,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
 #             print('done with ' +filename)
             
 #         elif filename.startswith("mNode_Port4"):
-#             filename_only = filename[:-6]
+#             filename_only = filename[:-4]
 #             path_saveEPSILON = r"E:\ASIT-research\BB-ASIT\Level2_analysis\epsilon_files"
 #             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port4/"
 #             df_align_interp = pd.read_csv(file)
@@ -350,7 +350,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
 #             print('done with ' +filename)
             
 #         elif filename.startswith('mNode_Port5'):
-#             filename_only = filename[:-6]
+#             filename_only = filename[:-4]
 #             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port5/"
 #             s5_df = pd.read_csv(file)
 #             if len(s5_df)>1:
@@ -365,7 +365,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
 #             print('done with ' +filename)
             
 #         elif filename.startswith('mNode_Port6'):
-#             filename_only = filename[:-6]
+#             filename_only = filename[:-4]
 #             path_save = r"E:\ASIT-research\BB-ASIT\Level2_analysis\port6/"
 #             if filename.endswith('L1_1.csv'):
 #                 s6_df1 = pd.read_csv(file)
