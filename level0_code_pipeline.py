@@ -163,56 +163,20 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
         
-        if filename.startswith("mNode_Port1"):
-            filename_only = filename[:-4]
-            path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port1/"
-            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
-            s1_df = pd.read_csv(file, index_col=None, header = None) #read file into df
-            s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
-            s1_df = s1_df[['u', 'v', 'w', 'T',]]            
-            s1_df['u']=s1_df['u'].astype(float) 
-            s1_df['v']=s1_df['v'].astype(float)            
-            s1_df['u']=-1*s1_df['u']
-            s1_df['w']=-1*s1_df['w']
-            # s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-            if (len(s1_df)>=3000) & (s1_df['u'].isna().sum()<1000):                                    
-                df_aligned = alignwind(s1_df) #perform align wind function
-                # print('TRY, df_aligned worked')
-                df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
-                df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
-                df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
-                # print('TRY, despike lines worked')
-                df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
-                # print('TRY, interpolate worked')
-                # df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
-                df_sonic2paros_interp = interp_sonics2paros(df_aligned)
-                # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-            else:
-                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
-            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
-            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-            print('Port 1 ran: '+filename)
-            plt.plot(df_aligned['Ur'], label="Ur")
-            plt.plot(df_aligned['Vr'], label="Vr")
-            plt.plot(df_aligned['Wr'], label="Wr")                         
-            # plt.ylim(-4,10)
-            plt.legend(loc='upper left',prop={'size': 6})
-            plt.title(str(filename))
-            plt.draw()
-            plt.pause(0.0001)
-            plt.clf()
-            
-        # elif filename.startswith("mNode_Port2"):
+        # if filename.startswith("mNode_Port1"):
         #     filename_only = filename[:-4]
-        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port2/"
+        #     path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port1/"
         #     path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
-        #     s2_df = pd.read_csv(file, index_col=None, header = None) #read file into df
-        #     s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
-        #     s2_df = s2_df[['u', 'v', 'w', 'T',]]
-        #     s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
-        #     if (len(s2_df)>=3000) & (s2_df['u'].isna().sum()<1000):                                    
-        #         df_aligned = alignwind(s2_df) #perform align wind function
+        #     s1_df = pd.read_csv(file, index_col=None, header = None) #read file into df
+        #     s1_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
+        #     s1_df = s1_df[['u', 'v', 'w', 'T',]]            
+        #     s1_df['u']=s1_df['u'].astype(float) 
+        #     s1_df['v']=s1_df['v'].astype(float)            
+        #     s1_df['u']=-1*s1_df['u']
+        #     s1_df['w']=-1*s1_df['w']
+        #     # s1_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+        #     if (len(s1_df)>=3000) & (s1_df['u'].isna().sum()<1000):                                    
+        #         df_aligned = alignwind(s1_df) #perform align wind function
         #         # print('TRY, df_aligned worked')
         #         df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
         #         df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
@@ -228,7 +192,7 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         #         df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
         #     df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
         #     df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
-        #     print('Port 2 ran: '+filename)
+        #     print('Port 1 ran: '+filename)
         #     plt.plot(df_aligned['Ur'], label="Ur")
         #     plt.plot(df_aligned['Vr'], label="Vr")
         #     plt.plot(df_aligned['Wr'], label="Wr")                         
@@ -238,6 +202,44 @@ for root, dirnames, filenames in os.walk(filepath): #this is for looping through
         #     plt.draw()
         #     plt.pause(0.0001)
         #     plt.clf()
+            
+        if filename.startswith("mNode_Port2"):
+            filename_only = filename[:-4]
+            path_save = r"E:\ASIT-research\BB-ASIT\Level1_align-despike-interp\port2/"
+            path_saveB = r'E:\ASIT-research\BB-ASIT\Level2_analysis\resample_sonic2paros/'
+            s2_df = pd.read_csv(file, index_col=None, header = None) #read file into df
+            s2_df.columns =['u', 'v', 'w', 'T', 'err_code','chk_sum'] #set column names to the variable
+            s2_df = s2_df[['u', 'v', 'w', 'T',]]
+            s2_df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
+            if (len(s2_df)>=3000) & (s2_df['u'].isna().sum()<1000):                                    
+                df_aligned = alignwind(s2_df) #perform align wind function
+                # print('TRY, df_aligned worked')
+                df_aligned['Ur'] = df_aligned['Ur'].apply(lambda x: np.nan if abs(x) > 31 else x) #despiking winds > 40kts
+                df_aligned['Vr'] = df_aligned['Vr'].apply(lambda x: np.nan if abs(x) > 10 else x) #despiking v component
+                df_aligned['Wr'] = df_aligned['Wr'].apply(lambda x: np.nan if abs(x) > 5 else x) #despiking w component
+                # print('TRY, despike lines worked')
+                df_align_interp = interp_sonics123(df_aligned) #interpolating to the sensor's frequency                       
+                # print('TRY, interpolate worked')
+                # df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+                df_sonic2paros_interp = interp_sonics2paros(df_aligned)
+                # df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
+            else:
+                df_align_interp = pd.DataFrame(np.nan, index=[0,1], columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+                df_sonic2paros_interp = pd.DataFrame(np.nan, index=range(0), columns=['base_index','Ur','Vr','Wr','T','u','v','w','alpha','beta'])
+            df_align_interp.to_csv(path_save+str(filename_only)+'_1.csv') #saving the new aligned, despiked, and interpolated df as a .csv file                       
+            df_sonic2paros_interp.to_csv(path_saveB+str(filename_only)+'_1.csv')
+            print('Port 2 ran: '+filename)
+            mean_u = df_aligned['Ur'].mean()
+            print(mean_u) 
+            plt.plot(df_aligned['Ur'], label="Ur")
+            plt.plot(df_aligned['Vr'], label="Vr")
+            plt.plot(df_aligned['Wr'], label="Wr")                         
+            # plt.ylim(-4,10)
+            plt.legend(loc='upper left',prop={'size': 6})
+            plt.title(str(filename))
+            plt.draw()
+            plt.pause(0.0001)
+            plt.clf()
 
             
         # elif filename.startswith("mNode_Port3"):
