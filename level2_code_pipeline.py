@@ -50,9 +50,9 @@ import scipy.signal as signal
 print('done with imports')
 #%%
 mean_df1 = pd.DataFrame()
-# mean_df2 = pd.DataFrame()
-# mean_df3 = pd.DataFrame()
-# mean_df4 = pd.DataFrame()
+mean_df2 = pd.DataFrame()
+mean_df3 = pd.DataFrame()
+mean_df4 = pd.DataFrame()
 
 s1_UpWp_bar = []
 s1_WpE_bar = []
@@ -60,17 +60,23 @@ s1_WpTp_bar = []
 s1_u_bar = []
 s1_T_bar = []
 
-# s2_UpWp_bar = []
-# s2_WpE_bar = []
-# s2_WpTp_bar = []
+s2_UpWp_bar = []
+s2_WpE_bar = []
+s2_WpTp_bar = []
+s2_u_bar = []
+s2_T_bar = []
 
-# s3_UpWp_bar = []
-# s3_WpE_bar = []
-# s3_WpTp_bar = []
+s3_UpWp_bar = []
+s3_WpE_bar = []
+s3_WpTp_bar = []
+s3_u_bar = []
+s3_T_bar = []
 
-# s4_UpWp_bar = []
-# s4_WpE_bar = []
-# s4_WpTp_bar = []
+s4_UpWp_bar = []
+s4_WpE_bar = []
+s4_WpTp_bar = []
+s4_u_bar = []
+s4_T_bar = []
 
 # s1_wind_dir_bar = []
 # s1_U_horizontal_bar = []
@@ -80,78 +86,80 @@ s1_T_bar = []
 # s1_T_prime_mean = []
 
 path_saveA = r"E:\ASIT-research\BB-ASIT\Level3_mean\other/"
-folderPath= r"E:\ASIT-research\BB-ASIT\Level2_analysis\port1"
+folderPath= r"E:\ASIT-research\BB-ASIT\Level2_analysis\ports"
 start=datetime.datetime.now()
 for root, dirnames,filenames in os.walk(folderPath): #this is for looping through files that are in a folder inside another folder
     for filename in natsort.natsorted(filenames):
         file = os.path.join(root, filename)
-        if filename.startswith("mNode_Port1"):
-            filename_only = filename[:-4]
-            df_sonic = pd.read_csv(file)
-            #variables from the dataframe: 
-                # <u> = u_bar, 
-                # u' = u_p, 
-                # v' = v_p, 
-                # w' = w_p, 
-                # <T> = T_bar, 
-                # T' = T_p, 
-                # tke = tke, 
-                # u_horizontal = U_horiz, 
-                # u_streamwise = U_streamwise
+#         if filename.startswith("mNode_Port1"):
+#             filename_only = filename[:-4]
+#             df_sonic = pd.read_csv(file)
+#             #variables from the dataframe: 
+#                 # <u> = u_bar, 
+#                 # u' = u_p, 
+#                 # v' = v_p, 
+#                 # w' = w_p, 
+#                 # <T> = T_bar, 
+#                 # T' = T_p, 
+#                 # tke = tke, 
+#                 # u_horizontal = U_horiz, 
+#                 # u_streamwise = U_streamwise
             
-            UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
-            s1_UpWp_bar.append(UpWp_bar_i)
-            WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])            
-            s1_WpTp_bar.append(WpTp_bar_i)
-            WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["e_bar"])
-            s1_WpE_bar.append(WpE_bar_i)
-            s1_u_bar_i=df_sonic["u"].mean()
-            s1_u_bar.append(s1_u_bar_i)
-            s1_T_bar_i=df_sonic["T"].mean()
-            s1_T_bar.append(s1_T_bar_i)
-            print(filename)
+#             UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
+#             s1_UpWp_bar.append(UpWp_bar_i)
+#             WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])            
+#             s1_WpTp_bar.append(WpTp_bar_i)
+#             WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["e_bar"])
+#             s1_WpE_bar.append(WpE_bar_i)
+#             s1_u_bar_i=df_sonic["u"].mean()
+#             s1_u_bar.append(s1_u_bar_i)
+#             s1_T_bar_i=df_sonic["T"].mean()
+#             s1_T_bar.append(s1_T_bar_i)
+#             print(filename)
             
-    # final_port1_UpWp_bar = np.append(s1_UpWp_bar)
-    # final_port1_WpTp_bar = np.concatenate(s1_WpTp_bar)
-    # final_port1_WpE_bar = np.concatenate(s1_WpE_bar, axis=0)
-    # final_port1_u_bar = np.concatenate(s1_u_bar, axis=0)
-    # final_port1_T_bar = np.concatenate(s1_T_bar, axis=0)
+#     # final_port1_UpWp_bar = np.append(s1_UpWp_bar)
+#     # final_port1_WpTp_bar = np.concatenate(s1_WpTp_bar)
+#     # final_port1_WpE_bar = np.concatenate(s1_WpE_bar, axis=0)
+#     # final_port1_u_bar = np.concatenate(s1_u_bar, axis=0)
+#     # final_port1_T_bar = np.concatenate(s1_T_bar, axis=0)
             
-            # c1 = 0.53                
-            # goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
-            # epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
-            # epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+#             # c1 = 0.53                
+#             # goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+#             # epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+#             # epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
             
-mean_df1['<UpWp>']=s1_UpWp_bar
-mean_df1['<WpTp>']=s1_WpTp_bar
-mean_df1['<WpE>']=s1_WpE_bar
-mean_df1['<u>']=s1_u_bar
-mean_df1['<T>']=s1_T_bar
-mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
+# # mean_df1['<UpWp>']=s1_UpWp_bar
+# # mean_df1['<WpTp>']=s1_WpTp_bar
+# # mean_df1['<WpE>']=s1_WpE_bar
+# # mean_df1['<u>']=s1_u_bar
+# # mean_df1['<T>']=s1_T_bar
+# # mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
 
 
         
-    #     elif filename.startswith("mNode_Port2"):
-    #             df_sonic = pd.read_csv(filename)
-    #             #variables from the dataframe: 
-    #                 # <u> = u_bar, 
-    #                 # u' = u_p, 
-    #                 # v' = v_p, 
-    #                 # w' = w_p, 
-    #                 # <T> = T_bar, 
-    #                 # T' = T_p, 
-    #                 # tke = tke, 
-    #                 # u_horizontal = U_horiz, 
-    #                 # u_streamwise = U_streamwise
-                
-    #             UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
-    #             s2_UpWp_bar.append(UpWp_bar_i)
-    #             WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])
-    #             s2_WpTp_bar.append(WpTp_bar_i)
-    #             WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["tke"])
-    #             s2_WpE_bar.append(WpE_bar_i)
-    #             s2_u_bar=np.array(df_sonic["u_bar"].mean())
-    #             s2_T_bar=np.array(df_sonic["T_bar"].mean())            
+        # elif filename.startswith("mNode_Port2"):
+        #         df_sonic = pd.read_csv(file)
+        #         #variables from the dataframe: 
+        #             # <u> = u_bar, 
+        #             # u' = u_p, 
+        #             # v' = v_p, 
+        #             # w' = w_p, 
+        #             # <T> = T_bar, 
+        #             # T' = T_p, 
+        #             # tke = tke, 
+        #             # u_horizontal = U_horiz, 
+        #             # u_streamwise = U_streamwise
+        #         UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
+        #         s2_UpWp_bar.append(UpWp_bar_i)
+        #         WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])
+        #         s2_WpTp_bar.append(WpTp_bar_i)
+        #         WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["e_bar"])
+        #         s2_WpE_bar.append(WpE_bar_i)
+        #         s2_u_bar_i=df_sonic["u"].mean()
+        #         s2_u_bar.append(s2_u_bar_i)
+        #         s2_T_bar_i=df_sonic["T"].mean()
+        #         s2_T_bar.append(s2_T_bar_i)
+        #         print(filename)
     #             c1 = 0.53                
     #             goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
     #             epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
@@ -159,7 +167,7 @@ mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
     #             mean_df2.assign(s2_UpWp_bar = '<UpWp>',s2_WpTp_bar = '<WpTp>',s2_WpE_bar = '<WpE>',s2_u_bar = '<u>',s2_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
     #     elif filename.startswith("mNode_Port3"):
-    #             df_sonic = pd.read_csv(filename)
+    #             df_sonic = pd.read_csv(file)
     #             #variables from the dataframe: 
     #                 # <u> = u_bar, 
     #                 # u' = u_p, 
@@ -175,42 +183,48 @@ mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
     #             s3_UpWp_bar.append(UpWp_bar_i)
     #             WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])
     #             s3_WpTp_bar.append(WpTp_bar_i)
-    #             WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["tke"])
+    #             WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["e_bar"])
     #             s3_WpE_bar.append(WpE_bar_i)
-    #             s3_u_bar=np.array(df_sonic["u_bar"].mean())
-    #             s3_T_bar=np.array(df_sonic["T_bar"].mean())
-    #             c1 = 0.53                
-    #             goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
-    #             epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
-    #             epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
-    #             mean_df3.assign(s3_UpWp_bar = '<UpWp>',s3_WpTp_bar = '<WpTp>',s3_WpE_bar = '<WpE>',s3_u_bar = '<u>',s3_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
+    #             s3_u_bar_i=df_sonic["u"].mean()
+    #             s3_u_bar.append(s3_u_bar_i)
+    #             s3_T_bar_i=df_sonic["T"].mean()
+    #             s3_T_bar.append(s3_T_bar_i)
+    #             print(filename)
+    # #             c1 = 0.53                
+    # #             goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+    # #             epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+    # #             epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+    # #             mean_df3.assign(s3_UpWp_bar = '<UpWp>',s3_WpTp_bar = '<WpTp>',s3_WpE_bar = '<WpE>',s3_u_bar = '<u>',s3_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
-    #     elif filename.startswith("mNode_Port4"):
-    #             df_sonic = pd.read_csv(filename)
-    #             #variables from the dataframe: 
-    #                 # <u> = u_bar, 
-    #                 # u' = u_p, 
-    #                 # v' = v_p, 
-    #                 # w' = w_p, 
-    #                 # <T> = T_bar, 
-    #                 # T' = T_p, 
-    #                 # tke = tke, 
-    #                 # u_horizontal = U_horiz, 
-    #                 # u_streamwise = U_streamwise
+        if filename.startswith("mNode_Port4"):
+                df_sonic = pd.read_csv(file)
+                #variables from the dataframe: 
+                    # <u> = u_bar, 
+                    # u' = u_p, 
+                    # v' = v_p, 
+                    # w' = w_p, 
+                    # <T> = T_bar, 
+                    # T' = T_p, 
+                    # tke = tke, 
+                    # u_horizontal = U_horiz, 
+                    # u_streamwise = U_streamwise
                 
-    #             UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
-    #             s4_UpWp_bar.append(UpWp_bar_i)
-    #             WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])
-    #             s4_WpTp_bar.append(WpTp_bar_i)
-    #             WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["tke"])
-    #             s4_WpE_bar.append(WpE_bar_i)
-    #             s4_u_bar=np.array(df_sonic["u_bar"].mean())
-    #             s4_T_bar=np.array(df_sonic["T_bar"].mean())
-    #             c1 = 0.53                
-    #             goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
-    #             epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
-    #             epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
-    #             mean_df4.assign(s4_UpWp_bar = '<UpWp>',s4_WpTp_bar = '<WpTp>',s4_WpE_bar = '<WpE>',s4_u_bar = '<u>',s4_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
+                UpWp_bar_i = np.nanmean(df_sonic["u_p"]*df_sonic["w_p"])
+                s4_UpWp_bar.append(UpWp_bar_i)
+                WpTp_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["T_p"])
+                s4_WpTp_bar.append(WpTp_bar_i)
+                WpE_bar_i = np.nanmean(df_sonic["w_p"]*df_sonic["e_bar"])
+                s4_WpE_bar.append(WpE_bar_i)
+                s4_u_bar_i=df_sonic["u"].mean()
+                s4_u_bar.append(s4_u_bar_i)
+                s4_T_bar_i=df_sonic["T"].mean()
+                s4_T_bar.append(s4_T_bar_i)
+                print(filename)
+                # c1 = 0.53                
+                # goodk_df = df_sonic.loc[(df_sonic['k_arr']>1)&(df_sonic['k_arr']<5)]
+                # epsilon_goodk = (np.mean(goodk_df['Pww_k']*(goodk_df['k_arr']**(5/3)))/c1)**(3/2)
+                # epsilon_allk = (np.mean(df_sonic['Pww_k']*(df_sonic['k_arr']**(5/3)))/c1)**(3/2)
+                # mean_df4.assign(s4_UpWp_bar = '<UpWp>',s4_WpTp_bar = '<WpTp>',s4_WpE_bar = '<WpE>',s4_u_bar = '<u>',s4_T_bar = '<T>',epsilon_goodk = 'epsilon_goodk',epsilon_allk = 'epsilon_allk')                
                 
     #     else:
     #         print('not ports 1-4')
@@ -219,32 +233,63 @@ mean_df1.to_csv(path_saveA+str(filename_only)+'_3.csv')
     # mean_df2.to_csv(path_saveA+'sonic2'+'_meanComponents.csv')
     # mean_df3.to_csv(path_saveA+'sonic3'+'_meanComponents.csv')
     # mean_df4.to_csv(path_saveA+'sonic4'+'_meanComponents.csv')
+# mean_df1['<UpWp>']=s1_UpWp_bar
+# mean_df1['<WpTp>']=s1_WpTp_bar
+# mean_df1['<WpE>']=s1_WpE_bar
+# mean_df1['<u>']=s1_u_bar
+# mean_df1['<T>']=s1_T_bar
+# mean_df1.to_csv(path_saveA+'port1_meanComponents'+'.csv')
+
+# mean_df2['<UpWp>']=s2_UpWp_bar
+# mean_df2['<WpTp>']=s2_WpTp_bar
+# mean_df2['<WpE>']=s2_WpE_bar
+# mean_df2['<u>']=s2_u_bar
+# mean_df2['<T>']=s2_T_bar
+# mean_df2.to_csv(path_saveA+'port2_meanComponents'+'.csv')
+
+# mean_df3['<UpWp>']=s3_UpWp_bar
+# mean_df3['<WpTp>']=s3_WpTp_bar
+# mean_df3['<WpE>']=s3_WpE_bar
+# mean_df3['<u>']=s3_u_bar
+# mean_df3['<T>']=s3_T_bar
+# mean_df3.to_csv(path_saveA+'port3_meanComponents'+'.csv')
+
+mean_df4['<UpWp>']=s4_UpWp_bar
+mean_df4['<WpTp>']=s4_WpTp_bar
+mean_df4['<WpE>']=s4_WpE_bar
+mean_df4['<u>']=s4_u_bar
+mean_df4['<T>']=s4_T_bar
+mean_df4.to_csv(path_saveA+'port4_meanComponents'+'.csv')
+
 print('done')
+
 end = datetime.datetime.now()
 print(start)
 print(end)  
 #%%
-plt.plot(s1_u_bar, label = '<u>')
+plt.plot(s4_u_bar, label = '<u>')
 plt.legend()
-plt.title('<u> time series April 14-May 15, 2022')
+plt.title('Sonic 4 <u> time series April 14-May 15, 2022')
 #%%
-plt.plot(s1_T_bar, label = '<T>')
+plt.plot(s4_T_bar, label = '<T>')
 plt.legend()
-plt.title('<T> time series April 14-May 15, 2022')
+plt.ylim(0,20)
+plt.title('Sonic 4 <T> time series April 14-May 15, 2022')
 #%%
-plt.plot(s1_UpWp_bar, label = "<u'w'>")
+plt.plot(s4_UpWp_bar, label = "<u'w'>")
 plt.legend()
-plt.title("<u'w'> time series April 14-May 15, 2022")
+plt.ylim(-0.75,0.55)
+plt.title("Sonic 4 <u'w'> time series April 14-May 15, 2022")
 #%%
-plt.plot(s1_WpTp_bar, label = "<w'T'>")
+plt.plot(s4_WpTp_bar, label = "<w'T'>")
 plt.legend()
 plt.ylim(-0.2,0.2)
-plt.title("<w'T'> time series April 14-May 15, 2022")
+plt.title("Sonic 4 <w'T'> time series April 14-May 15, 2022")
 #%%
-plt.plot(s1_WpE_bar, label = "<w'e>")
+plt.plot(s4_WpE_bar, label = "<w'e>")
 plt.legend()
 plt.ylim(-0.00001,0.00001)
-plt.title("<w'e> time series April 14-May 15, 2022")
+plt.title("Sonic 4 <w'e> time series April 14-May 15, 2022")
 #%%
 s1_WpPp = []
 s2_WpPp = []
